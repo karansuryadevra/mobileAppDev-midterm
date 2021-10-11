@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:midterm/authentication.dart';
+
 void main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(home: Homepage()));
@@ -20,6 +22,7 @@ class _HomepageState extends State<Homepage> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   var userRole;
   var users;
+  var signedOutSnackBar = SnackBar(content: Text('Signed Out!'));
 
   @override
   void initState() {
@@ -109,8 +112,10 @@ class _HomepageState extends State<Homepage> {
                             ),
                             child: Text('LOGOUT'),
                             onPressed: () {
-                              getUserDetails();
+                              Authentication.signOut();
                               setState(() {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(signedOutSnackBar);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

@@ -141,4 +141,9 @@ class Authentication {
       throw (e);
     }
   }
+
+  static signOut() {
+    FirebaseAuth.instance.signOut();
+    return true;
+  }
 }
